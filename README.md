@@ -50,5 +50,5 @@ const EMAIL = "you@example.com";
 ```
 
 # License
-Secret-Lockbox is 'licensed' with the [Unlicense]](LICENSE.md)
+Secret-Lockbox is 'licensed' with the [Unlicense](LICENSE.md)
 
