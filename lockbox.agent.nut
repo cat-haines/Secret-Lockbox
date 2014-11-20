@@ -1,7 +1,7 @@
 /******************** Constants ********************/
 // Your MailGun settings
-const API_KEY = "";
-const SANDBOX = "";
+const API_KEY = "key-a1b2c3...";
+const SANDBOX = "sandbox123abc.mailgun.org";
 
 // Define what email to notify
 const EMAIL = "you@example.com";
@@ -154,9 +154,9 @@ const html = @"
 
 /******************** LIBRARY CODE ********************/
 function SendEmail(to, subject, text) {
-    local url = "https://api.mailgun.net/v2/" + SANDBOX + ".mailgun.org/messages";
-    local fromEmail = "alarm@" + SANDBOX + ".mailgun.org";
-
+    local url = "https://api.mailgun.net/v2/" + SANDBOX + "/messages";
+    local fromEmail = "alarm@" + SANDBOX;
+ 
     local headers = { "Authorization": "Basic " + http.base64encode("api:" + API_KEY) };
     
     local data = http.urlencode({
@@ -172,8 +172,7 @@ function SendEmail(to, subject, text) {
         }
     });
 }
-
-
+ 
 /******************** Electric Imp CODE ********************/
 // Create a variable to hold the current lock state
 lockStatus <- LOCKED;
