@@ -1,3 +1,18 @@
+/******************** Constants ********************/
+// Your MailGun settings
+const API_KEY = "";
+const SANDBOX = "";
+
+// Define what email to notify
+const EMAIL = "you@example.com";
+
+// Define your password for the lockbox
+const PASSWORD = "yourpassword"
+
+// Define Lock States
+const UNLOCKED = 0;
+const LOCKED = 1;
+
 /******************** HTML CODE ********************/
 const html = @"
 <!DOCTYPE html>
@@ -10,49 +25,49 @@ const html = @"
     <title>My Lockbox</title>
     
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
-    <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'>
-    <style> 
-        .webpage {
-            /* Background colour */
-            background-color: white;
-            
-            /* Full screen background image */
-            background-image: url('http://www.wallpaperdisk.com/wallpapers/Space/space2.jpg');
-            
+	<link rel='stylesheet' href='https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'>
+	<style> 
+	    .webpage {
+	        /* Background colour */
+	        background-color: white;
+	        
+	        /* Full screen background image */
+	        background-image: url('http://www.wallpaperdisk.com/wallpapers/Space/space2.jpg');
+	        
             /* tiled background image */
             /*
              * background-image: url('http://zho.berka.com/tiles/starsandnebula250d.jpg');
-             * background-repeat: repeat;
-             */
-        }
-        
-        .title {
-            color: white;
-        }
-        
-        .password-box {
-            width: 80%;
-            margin: 25px auto 25px auto;
-            text-align:center;
-            
-            border-color: black;
-            background-color: white;
-            color: black;
-        }
-        
-        .btn {
-            width: 150px;
-            
-            border-color: grey;
-            background-color: white;
-            color: black;
-        }
-        
-        .lock-icon {
-            margin-top: 20px;
-            color: white;
-        }
-        
+	         * background-repeat: repeat;
+	         */
+	    }
+	    
+	    .title {
+	        color: white;
+	    }
+	    
+	    .password-box {
+	        width: 80%;
+	        margin: 25px auto 25px auto;
+	        text-align:center;
+	        
+	        border-color: black;
+	        background-color: white;
+	        color: black;
+	    }
+	    
+	    .btn {
+	        width: 150px;
+	        
+	        border-color: grey;
+	        background-color: white;
+	        color: black;
+	    }
+	    
+	    .lock-icon {
+	        margin-top: 20px;
+	        color: white;
+	    }
+	    
         .footer {
            position:fixed;
            left:0px;
@@ -64,11 +79,11 @@ const html = @"
     </style>
   </head>
   <body class='webpage'>
-    <div class='container col-xs-12 col-sm-4 col-sm-offset-4 text-center'>
-      <h1 class='title'>My Lockbox</h1>
-        <input class='form-control password-box' type='password'  id='pw' placeholder='Password'>
-        
-        <button class='btn' type='button' onclick='lock();'><i class='fa fa-lock'></i>&nbsp; Lock</button>
+	<div class='container col-xs-12 col-sm-4 col-sm-offset-4 text-center'>
+	  <h1 class='title'>My Lockbox</h1>
+  	    <input class='form-control password-box' type='password'  id='pw' placeholder='Password'>
+  	    
+	    <button class='btn' type='button' onclick='lock();'><i class='fa fa-lock'></i>&nbsp; Lock</button>
         <button class='btn' type='button' onclick='unlock();'><i class='fa fa-unlock-alt'></i>&nbsp; Unlock</button>
 
       <div class='lock-icon'>
@@ -139,10 +154,10 @@ const html = @"
 
 /******************** LIBRARY CODE ********************/
 function SendEmail(to, subject, text) {
-    local url = "https://api.mailgun.net/v2/sample.mailgun.org/messages";
-    local fromEmail = "alarm@sample.mailgun.org";
+    local url = "https://api.mailgun.net/v2/" + SANDBOX + ".mailgun.org/messages";
+    local fromEmail = "alarm@" + SANDBOX + ".mailgun.org";
 
-    local headers = { "Authorization": "Basic " + http.base64encode("api:API-KEY") };
+    local headers = { "Authorization": "Basic " + http.base64encode("api:" + API_KEY) };
     
     local data = http.urlencode({
         to = to,
@@ -160,16 +175,6 @@ function SendEmail(to, subject, text) {
 
 
 /******************** Electric Imp CODE ********************/
-// Define your password
-const PASSWORD = "yourpassword"
-
-// Define what email to notify
-const EMAIL = "you@example.com";
-
-// Degine Lock States
-const UNLOCKED = 0;
-const LOCKED = 1;
-
 // Create a variable to hold the current lock state
 lockStatus <- LOCKED;
 
@@ -236,4 +241,3 @@ device.on("checkAlarm", function(data) {
         ALARM();
     }
 });
-
